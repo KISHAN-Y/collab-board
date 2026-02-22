@@ -14,7 +14,9 @@ const state = {
 // --- CRDT Setup ---
 const ydoc = new Y.Doc();
 // Connect to the Python FastAPI WebSocket Server
-const provider = new WebsocketProvider('ws://localhost:3000', 'ws/board-room', ydoc);
+// Use environment variable for production, fallback to localhost for dev
+const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:3000';
+const provider = new WebsocketProvider(wsUrl, 'ws/board-room', ydoc);
 const yShapes = ydoc.getMap('shapes'); // The shared map of all objects on canvas
 const awareness = provider.awareness;
 
