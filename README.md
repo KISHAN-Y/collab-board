@@ -45,6 +45,24 @@ npm run dev
 ```
 Open `http://localhost:5173` in multiple browser windows to test real-time collaboration!
 
+## 🌍 Production Deployment
+
+### Frontend (Netlify)
+The frontend (`/client`) is a static Vite application perfectly suited for Netlify.
+1. Connect your GitHub repository to Netlify.
+2. Set the Base Directory to `client`.
+3. Build command: `npm run build`.
+4. Publish directory: `client/dist`.
+5. **Environment Variable**: Set `VITE_WS_URL` in Netlify to your deployed backend secure WebSocket URL (e.g., `wss://your-backend.onrender.com`).
+
+### Backend (Render / Railway)
+Because Netlify only hosts static files and serverless functions (which don't support persistent WebSockets), the Python backend **cannot** be deployed to Netlify. 
+You must deploy the `/server` folder to a service like **Render** or **Railway**:
+1. Create a new Web Service on Render.
+2. Root directory: `server`.
+3. Build command: `pip install -r requirements.txt`.
+4. Start command: `uvicorn src.server:app --host 0.0.0.0 --port $PORT`.
+
 ## 🤝 How to Record a Showcase
 To demonstrate the power of this application for LinkedIn/GitHub:
 1. Open two browser windows side-by-side.
